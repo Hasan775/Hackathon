@@ -1,178 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Travel - Hiking in Azerbaijan</title>
-    <style>
-        /* Reset and basic styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Easy Travel - Hiking in Azerbaijan</title>
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+    /* Reset and basic styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-        }
+    body {
+        background-color: #f5f5f5;
+        color: #333;
+    }
 
-        /* Navigation with logo and full-height buttons */
+    /* Navigation with logo and smaller height */
+    nav {
+        display: flex;
+        align-items: center;
+        background-color: #2a6f3e;
+        padding: 0 15px;
+        height: 60px;
+    }
+
+    nav img {
+        height: 40px;
+        margin-right: 15px;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        padding: 0 15px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    nav a:hover {
+        background-color: #1f4f2a;
+    }
+
+    /* Full-width Our Project section with parallax */
+    #project-container {
+        background-image: url('your-background.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        padding: 80px 0;
+        color: white;
+        text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    }
+
+    #project {
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    #project h2 {
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        color: white;
+    }
+
+    #project p {
+        max-width: 900px;
+        margin: auto;
+        font-size: 1.2em;
+        line-height: 1.6;
+        color: white;
+    }
+
+    /* Benefits full-width section */
+    #benefits-container {
+        background-color: #e6f3ea;
+        padding: 60px 0;
+    }
+
+    #benefits {
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 20px;
+    }
+
+    #benefits h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #2a6f3e;
+    }
+
+    .benefits {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .benefit-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s;
+    }
+
+    .benefit-card:hover {
+        transform: scale(1.05);
+    }
+
+    .benefit-card h3 {
+        margin-bottom: 15px;
+        color: #2a6f3e;
+    }
+
+    .benefit-card p {
+        color: #555;
+    }
+
+    /* Sections */
+    section {
+        padding: 50px 20px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    section h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #2a6f3e;
+    }
+
+    /* Region Filter */
+    #region-filter {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    #region-select {
+        padding: 10px;
+        width: 250px;
+        border-radius: 6px;
+        border: 1px solid #999;
+        font-size: 1em;
+    }
+
+    .trails {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        justify-items: center; /* center cards in the row */
+    }
+
+    /* Card styles */
+    .trail-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        overflow: hidden;
+        width: 300px;
+        min-height: 480px;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Hidden state */
+    .trail-card.hide {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+    }
+
+
+    .trail-card:hover {
+        transform: scale(1.05);
+    }
+
+    .trail-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .trail-card h3 {
+        padding: 15px;
+        font-size: 1.2em;
+    }
+
+    .trail-card p {
+        padding: 0 15px 15px 15px;
+        color: #666;
+    }
+
+    /* Footer */
+    footer {
+        background-color: #2a6f3e;
+        color: white;
+        text-align: center;
+        padding: 20px;
+    }
+
+    footer a {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+    /* Responsive nav on smaller screens */
+    @media (max-width: 600px) {
         nav {
-            display: flex;
-            align-items: center;
-            background-color: #2a6f3e;
-            padding: 0 20px;
-            height: 80px; /* Fixed header height */
+            flex-direction: column;
+            align-items: flex-start;
+            height: auto;
         }
 
         nav img {
-            height: 60px; /* Logo size */
-            margin-right: 20px;
+            margin-bottom: 10px;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            padding: 0 20px;
+            padding: 0 15px;
             height: 100%;
             display: flex;
-            align-items: center; /* Vertically center text */
+            align-items: center;
             font-weight: bold;
-            transition: 0.3s;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-
-        nav a:hover {
-            background-color: #1f4f2a;
-        }
-
-        /* Sections */
-        section {
-            padding: 60px 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        section h2 {
-            text-align: center;
-            margin-bottom: 40px;
-            color: #2a6f3e;
-        }
-
-        .trails {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .trail-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-
-        .trail-card:hover {
-            transform: scale(1.05);
-        }
-
-        .trail-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .trail-card h3 {
-            padding: 15px;
-            font-size: 1.2em;
-        }
-
-        .trail-card p {
-            padding: 0 15px 15px 15px;
-            color: #666;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #2a6f3e;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        footer a {
-            color: #fff;
-            text-decoration: underline;
-        }
-
-        /* Responsive nav on smaller screens */
-        @media (max-width: 600px) {
-            nav {
-                flex-direction: column;
-                align-items: flex-start;
-                height: auto;
-            }
-
-            nav img {
-                margin-bottom: 10px;
-            }
-
-            nav a {
-                width: 100%;
-                padding: 10px 0;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 
-    <nav>
-        <img src="your-logo.png" alt="Easy Travel Logo">
-        <a href="#trails">Top Trails</a>
-        <a href="#tips">Hiking Tips</a>
-        <a href="#contact">Contact</a>
-    </nav>
+<nav>
+    <img src="your-logo.png" alt="Easy Travel Logo">
+    <a href="#project">Our Project</a>
+    <a href="#benefits">Benefits</a>
+    <a href="#trails">Top Trails</a>
+    <a href="#tips">Hiking Tips</a>
+    <a href="#contact">Contact</a>
+</nav>
 
-    <section id="trails">
-        <h2>Top Hiking Trails</h2>
-        <div class="trails">
-            <div class="trail-card">
-                <img src="https://images.unsplash.com/photo-1603271431627-1a6f4f55f12b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXp1cmJhaWphbiBoaWtpbmd8fDB8fDB8&ixlib=rb-4.0.3&q=80&w=400" alt="Trail 1">
-                <h3>Shahdag Mountain</h3>
-                <p>Experience the breathtaking views and fresh mountain air in the Caucasus region.</p>
+<!-- Full-width Our Project section with parallax -->
+<div id="project-container">
+    <section id="project">
+        <h2>Our Project</h2>
+        <p>
+            Our project is dedicated to helping hikers discover <strong>free and accessible hiking spots in Azerbaijan</strong>. 
+            Using our platform, users can find trails, hidden gems, and scenic locations without any entrance fees. 
+            We aim to make hiking more affordable, enjoyable, and accessible for everyone, while promoting safety, 
+            sustainability, and exploration of the country's natural beauty.
+        </p>
+    </section>
+</div>
+
+<!-- Full-width benefits section -->
+<div id="benefits-container">
+    <section id="benefits">
+        <h2>Benefits of Hiking</h2>
+        <div class="benefits">
+            <div class="benefit-card">
+                <h3>Physical Health</h3>
+                <p>Hiking improves cardiovascular fitness, strengthens muscles, and increases endurance.</p>
             </div>
-            <div class="trail-card">
-                <img src="https://images.unsplash.com/photo-1568792929152-7e51b3f6817f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWVsa2luZyBoYWlsc3xlbnwwfHwwfHw%3D&ixlib=rb-4.0.3&q=80&w=400" alt="Trail 2">
-                <h3>Gobustan National Park</h3>
-                <p>Discover ancient petroglyphs and unique landscapes on easy to moderate trails.</p>
+            <div class="benefit-card">
+                <h3>Mental Wellbeing</h3>
+                <p>Spending time in nature reduces stress, boosts mood, and improves mental clarity.</p>
             </div>
-            <div class="trail-card">
-                <img src="https://images.unsplash.com/photo-1541199249250-7aa45d03368b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YXp1cmJhaWphbiBoaWtpbmd8fDB8fDB8&ixlib=rb-4.0.3&q=80&w=400" alt="Trail 3">
-                <h3>Khinalug Village Trail</h3>
-                <p>Hike through one of the oldest mountain villages in the Caucasus for stunning views.</p>
+            <div class="benefit-card">
+                <h3>Social Connection</h3>
+                <p>Hiking with friends or groups fosters bonding and creates shared experiences.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>Adventure & Exploration</h3>
+                <p>Discover new trails, landscapes, and cultures while exploring Azerbaijan’s natural beauty.</p>
             </div>
         </div>
     </section>
+</div>
 
-    <section id="tips">
-        <h2>Hiking Tips</h2>
-        <p style="text-align:center; max-width:800px; margin:auto;">
-            Always carry enough water, wear comfortable hiking shoes, check weather conditions, 
-            and respect the local environment. Hiking in Azerbaijan offers a variety of terrains, 
-            from mountains to semi-deserts, so plan accordingly.
-        </p>
-    </section>
+<section id="trails">
+    <h2>Top Hiking Trails</h2>
 
-    <section id="contact">
-        <h2>Contact Us</h2>
-        <p style="text-align:center;">For more information, email us at <a href="mailto:info@easytravel.com">info@easytravel.com</a></p>
-    </section>
+    <!-- Region Filter -->
+    <div id="region-filter">
+        <select id="region-select">
+            <option value="all">All Regions</option>
+            <option value="Quba">Quba</option>
+            <option value="Gobustan">Gobustan</option>
+            <option value="Qusar">Qusar</option>
+        </select>
+    </div>
 
-    <footer>
-        &copy; 2025 Easy Travel. All rights reserved.
-    </footer>
+    <div class="trails" id="trail-list">
+
+        <!-- Shahdag -->
+        <div class="trail-card" data-region="Qusar">
+            <img src="https://images.unsplash.com/photo-1603271431627-1a6f4f55f12b?q=80&w=400" alt="Trail 1">
+            <h3>Shahdag Mountain</h3>
+            <p>
+                Region: Qusar<br><br>
+                One of the most iconic hiking destinations in Azerbaijan.  
+                Shahdag offers breathtaking mountain views, fresh alpine air, and peaceful nature.  
+                The trail ranges from moderate to difficult, making it perfect for hikers seeking 
+                adventure and unforgettable landscapes in the Greater Caucasus mountains.
+            </p>
+        </div>
+
+        <!-- Gobustan -->
+        <div class="trail-card" data-region="Gobustan">
+            <img src="https://images.unsplash.com/photo-1568792929152-7e51b3f6817f?q=80&w=400" alt="Trail 2">
+            <h3>Gobustan National Park</h3>
+            <p>
+                Region: Gobustan<br><br>
+                A UNESCO World Heritage site famous for its ancient rock carvings, mud volcanoes,  
+                and unique desert-like scenery.  
+                This trail is easy and beginner-friendly, suitable for family trips and cultural experiences.  
+                A perfect balance between hiking and exploring prehistoric history.
+            </p>
+        </div>
+
+        <!-- Khinalug -->
+        <div class="trail-card" data-region="Quba">
+            <img src="https://images.unsplash.com/photo-1541199249250-7aa45d03368b?q=80&w=400" alt="Trail 3">
+            <h3>Khinalug Village Trail</h3>
+            <p>
+                Region: Quba<br><br>
+                One of the oldest continuously inhabited mountain villages in the world.  
+                This trail passes through deep valleys, green slopes, and panoramic ridges.  
+                Ideal for those seeking authentic culture, ancient traditions, and dramatic Caucasus views.  
+                Moderate difficulty; recommended for all nature lovers.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<section id="tips">
+    <h2>Hiking Tips</h2>
+    <p style="text-align:center; max-width:800px; margin:auto;">
+        Always carry enough water, wear comfortable hiking shoes, check weather conditions, 
+        and respect the local environment. Hiking in Azerbaijan offers a variety of terrains, 
+        from mountains to semi-deserts, so plan accordingly.
+    </p>
+</section>
+
+<section id="contact">
+    <h2>Contact Us</h2>
+    <p style="text-align:center;">For more information, email us at <a href="mailto:info@easytravel.com">info@easytravel.com</a></p>
+</section>
+
+<footer>
+    &copy; 2025 Easy Travel. All rights reserved.
+</footer>
+
+<script>
+    const regionSelect = document.getElementById("region-select");
+    const trails = document.querySelectorAll(".trail-card");
+
+    regionSelect.addEventListener("change", function () {
+        const region = this.value;
+
+        trails.forEach(trail => {
+            const show = (region === "all" || trail.dataset.region === region);
+
+            if (show) {
+                // Make it visible in layout immediately
+                trail.style.display = "block"; 
+                setTimeout(() => {
+                    trail.classList.remove("hide"); // fade in
+                }, 10); // tiny delay to trigger transition
+            } else {
+                // fade out
+                trail.classList.add("hide");
+                setTimeout(() => {
+                    trail.style.display = "none"; // remove from layout after animation
+                }, 300); // match transition duration
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
