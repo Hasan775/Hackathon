@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Travel - Hiking in Azerbaijan</title>
+    <style>
+        /* Reset and basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Navigation with logo and full-height buttons */
+        nav {
+            display: flex;
+            align-items: center;
+            background-color: #2a6f3e;
+            padding: 0 20px;
+            height: 80px; /* Fixed header height */
+        }
+
+        nav img {
+            height: 60px; /* Logo size */
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0 20px;
+            height: 100%;
+            display: flex;
+            align-items: center; /* Vertically center text */
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #1f4f2a;
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2a6f3e;
+        }
+
+        .trails {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .trail-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .trail-card:hover {
+            transform: scale(1.05);
+        }
+
+        .trail-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .trail-card h3 {
+            padding: 15px;
+            font-size: 1.2em;
+        }
+
+        .trail-card p {
+            padding: 0 15px 15px 15px;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2a6f3e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Responsive nav on smaller screens */
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                height: auto;
+            }
+
+            nav img {
+                margin-bottom: 10px;
+            }
+
+            nav a {
+                width: 100%;
+                padding: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <img src="your-logo.png" alt="Easy Travel Logo">
+        <a href="#trails">Top Trails</a>
+        <a href="#tips">Hiking Tips</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="trails">
+        <h2>Top Hiking Trails</h2>
+        <div class="trails">
+            <div class="trail-card">
+                <img src="https://images.unsplash.com/photo-1603271431627-1a6f4f55f12b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXp1cmJhaWphbiBoaWtpbmd8fDB8fDB8&ixlib=rb-4.0.3&q=80&w=400" alt="Trail 1">
+                <h3>Shahdag Mountain</h3>
+                <p>Experience the breathtaking views and fresh mountain air in the Caucasus region.</p>
+            </div>
+            <div class="trail-card">
+                <img src="https://images.unsplash.com/photo-1568792929152-7e51b3f6817f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWVsa2luZyBoYWlsc3xlbnwwfHwwfHw%3D&ixlib=rb-4.0.3&q=80&w=400" alt="Trail 2">
+                <h3>Gobustan National Park</h3>
+                <p>Discover ancient petroglyphs and unique landscapes on easy to moderate trails.</p>
+            </div>
+            <div class="trail-card">
+                <img src="https://images.unsplash.com/photo-1541199249250-7aa45d03368b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YXp1cmJhaWphbiBoaWtpbmd8fDB8fDB8&ixlib=rb-4.0.3&q=80&w=400" alt="Trail 3">
+                <h3>Khinalug Village Trail</h3>
+                <p>Hike through one of the oldest mountain villages in the Caucasus for stunning views.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="tips">
+        <h2>Hiking Tips</h2>
+        <p style="text-align:center; max-width:800px; margin:auto;">
+            Always carry enough water, wear comfortable hiking shoes, check weather conditions, 
+            and respect the local environment. Hiking in Azerbaijan offers a variety of terrains, 
+            from mountains to semi-deserts, so plan accordingly.
+        </p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p style="text-align:center;">For more information, email us at <a href="mailto:info@easytravel.com">info@easytravel.com</a></p>
+    </section>
+
+    <footer>
+        &copy; 2025 Easy Travel. All rights reserved.
+    </footer>
+
+</body>
+</html>
