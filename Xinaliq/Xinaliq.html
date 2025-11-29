@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../logo.png" type="image/png">
-    <title>Easy Travel - Тропа Лаза - Кузун</title>
+    <title>Easy Travel - Горный путь Хыналыг</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -45,6 +45,7 @@
             align-items: center;
             font-weight: 500;
             transition: 0.3s;
+            cursor: pointer;
         }
 
         nav a:hover {
@@ -89,6 +90,11 @@
         .gallery img {
             width: 100%;
             border-radius: 10px;
+            transition: filter 0.3s;
+        }
+
+        .gallery img:hover {
+            filter: brightness(85%);
         }
 
         #map {
@@ -98,7 +104,6 @@
             margin-bottom: 30px;
         }
 
-        /* Footer */
         footer {
             background-color: #2a6f3e;
             color: white;
@@ -110,27 +115,21 @@
             color: #fff;
             text-decoration: underline;
         }
-        /* Responsive nav on smaller screens */
+
         @media (max-width: 600px) {
             nav {
                 flex-direction: column;
                 align-items: flex-start;
                 height: auto;
             }
-
             nav img {
                 margin-bottom: 10px;
             }
-
             nav a {
-                color: white;
-                text-decoration: none;
-                padding: 0 15px;
-                height: 100%;
-                display: flex;
-                align-items: center;
                 font-weight: bold;
-                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+            #map {
+                height: 300px;
             }
         }
     </style>
@@ -149,40 +148,41 @@
 </nav>
 
 <section id="gallery">
-    <h2>Галерея тропы Лаза — Кузун</h2>
+    <h2>Галерея горного пути Хыналыг</h2>
     <div class="gallery">
-        <img src="Laza-Kuzun1.jpg" alt="Тропа Лаза — Кузун 1">
-        <img src="Laza-Kuzun2.jpg" alt="Тропа Лаза — Кузун 2">
-        <img src="Laza-Kuzun3.jpg" alt="Тропа Лаза — Кузун 3">
+        <img src="Xinaliq1.jpg" alt="Хыналыг 1">
+        <img src="Xinaliq2.jpg" alt="Хыналыг 2">
+        <img src="Xinaliq3.jpg" alt="Хыналыг 3">
+        <img src="Xinaliq4.jpg" alt="Хыналыг 4">
     </div>
 </section>
 
 <section id="overview">
-    <h2>Обзор тропы Лаза — Кузун</h2>
+    <h2>Обзор горного пути Хыналыг</h2>
     <div class="trail-details">
-        <p>Тропа Лаза — Кузун — живописная горная тропа в Гусарском районе Азербайджана. Она протянулась примерно на 6–7 км и соединяет деревни Лаза и Кузун, проходя через леса, луга и небольшие ущелья. Маршрут идеально подходит для пеших прогулок без необходимости гида и предлагает разнообразные пейзажи Кавказских гор.</p>
-        <p>Тропа варьируется от лёгких участков до умеренно сложных склонов, что делает её доступной как для новичков, так и для любителей приключений. Вдоль пути встречаются смотровые площадки с прекрасными видами на окрестные горы и долины.</p>
+        <p>Горный путь Хыналыг — живописный маршрут в Губе, ведущий к высокогорной деревне Хыналыг. Протяжённость маршрута около 5–6 км, проходя через леса, горные склоны и ущелья. Путь идеально подходит для пеших прогулок и небольшого треккинга.</p>
+        <p>Маршрут варьируется от лёгких участков до умеренно сложных склонов, открывая туристам прекрасные панорамные виды на Кавказские горы и долины. Деревня Хыналыг — одно из древнейших и самых высокогорных поселений Азербайджана.</p>
     </div>
 </section>
 
 <section id="routes">
-    <h2>Маршруты на тропе Лаза — Кузун</h2>
+    <h2>Маршруты на пути Хыналыг</h2>
     <div class="trail-details">
-        <p><strong>Маршрут:</strong> Начало в Лаза и конец в Кузун</p>
+        <p><strong>Маршрут:</strong> Начало у подножья горы в Губе, конец в селе Хыналыг</p>
     </div>
     <div id="map"></div>
 </section>
 
 <section id="tips">
-    <h2>Советы для похода по тропе Лаза — Кузун</h2>
-    <p>Для безопасного и приятного путешествия по тропе Лаза — Кузун рекомендуем:</p>
+    <h2>Советы для похода по Хыналыгу</h2>
     <ul>
-        <li>Проверять прогноз погоды перед выходом на тропу.</li>
-        <li>Носить удобную обувь и одежду по сезону.</li>
-        <li>Брать с собой воду и лёгкие перекусы.</li>
-        <li>Соблюдать правила охраны природы и не оставлять мусор.</li>
-        <li>Делать остановки на смотровых площадках для отдыха и фотографий.</li>
-        <li>Использовать GPS или карты, чтобы не сбиться с маршрута.</li>
+        <li>Уточняйте погодные условия перед выходом, особенно в горной местности.</li>
+        <li>Надевайте удобную обувь с хорошей подошвой и подходящую по сезону одежду.</li>
+        <li>Берите с собой воду и небольшие перекусы для поддержания энергии.</li>
+        <li>Соблюдайте правила безопасности и охраны природы, не оставляйте мусор.</li>
+        <li>Останавливайтесь на смотровых площадках, чтобы отдохнуть и насладиться видами.</li>
+        <li>Используйте GPS, карты или приложение с маршрутом, чтобы не сбиться с пути.</li>
+        <li>Если идёте группой, держитесь вместе и заранее оговорите время встречи.</li>
     </ul>
 </section>
 
@@ -198,17 +198,17 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-    const map = L.map('map').setView([41.4065, 48.5150], 13);
+    const map = L.map('map').setView([41.2590, 48.5360], 13); // координаты Губы/Хыналыга
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap'
     }).addTo(map);
 
-    // Маркеры начала и конца тропы
+    // Маркеры начала и конца маршрута
     const points = [
-        {name: "Село Лаза (старт)", coords: [41.4115, 48.5130]},
-        {name: "Село Кузун (финиш)", coords: [41.4020, 48.5175]}
+        {name: "Начало маршрута в Губе", coords: [41.2700, 48.5400]},
+        {name: "Село Хыналыг (финиш)", coords: [41.2590, 48.5360]}
     ];
 
     points.forEach(point => {
