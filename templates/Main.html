@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="../logo.png" type="image/png">
+    <link rel="icon" href="static/logo.png" type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Easy Travel - Пеший туризм в Азербайджане</title>
     <style>
@@ -53,7 +53,7 @@
 
         /* Full-width Our Project section with parallax */
         #project-container {
-            background-image: url('background.png');
+            background-image: url('static/background.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -247,7 +247,7 @@
 </head>
 <body>
 <nav>
-    <a href="../Main/Main.html"><img src="../logo.png" alt="Easy Travel Логотип"></a>
+    <a href="../Main/Main.html"><img src="static/logo.png" alt="Easy Travel Логотип"></a>
     <a href="#project">Наш проект</a>
     <a href="#benefits">Преимущества</a>
     <a href="#trails">Лучшие маршруты</a>
@@ -304,8 +304,8 @@
 
     <div class="trails" id="trail-list">
         <div class="trail-card" data-region="Qusar">
-            <img src="../Laza-Kuzun/Laza-Kuzun1.jpg" alt="Шахдаг">
-            <h3><a href="../Laza-Kuzun/Laza-Kuzun.html">Тропа Лаза - Кузун </a></h3>
+            <img src="static/Laza-Kuzun1.jpg" alt="Лаза-Кузун">
+            <h3><a href="{{ url_for('laza_kuzun') }}">Тропа Лаза - Кузун </a></h3>
             <p>
                 Регион: Гусар<br><br>
                 Маршрут Лаза – Кузун — лёгкая горная тропа длиной около 6–7 км, соединяющая две деревни. 
@@ -315,8 +315,8 @@
         </div>
 
         <div class="trail-card" data-region="Qusar">
-            <img src="../Shahdag/Shahdag1.jpg" alt="Шахдаг">
-            <h3><a href="../Shahdag/Shahdag.html">Гора Шахдаг</a></h3>
+            <img src="static/Shahdag1.jpg" alt="Шахдаг">
+            <h3><a href="{{ url_for('shahdag') }}">Гора Шахдаг</a></h3>
             <p>
                 Регион: Гусар<br><br>
                 Один из самых известных походных маршрутов Азербайджана.
@@ -327,8 +327,8 @@
         </div>
 
         <div class="trail-card" data-region="Sheki">
-            <img src="../Transcaucas/Transcaucas1.jpg" alt="Гобустан">
-            <h3>Транскавказский маршрут</h3>
+            <img src="static/Transcaucas1.jpg" alt="Горный маршрут Транскавказ">
+            <h3><a href="{{ url_for('transcaucas') }}">Транскавказский маршрут</a></h3>
             <p>
                 Регион: Шеки<br><br>
                 Транскавказский маршрут — короткий горный трек через живописные долины и хребты Кавказа, 
@@ -338,8 +338,8 @@
         </div>
 
         <div class="trail-card" data-region="Quba">
-            <img src="../Xinaliq/Xinaliq2.jpg" alt="Хыналыг">
-            <h3><a href="../Xinaliq/Xinaliq.html">Тропа к селу Хыналыг</a></h3>
+            <img src="static/Xinaliq2.jpg" alt="Хыналыг">
+            <h3><a href="{{ url_for('xinaliq') }}">Тропа к селу Хыналыг</a></h3>
             <p>
                 Регион: Губа<br><br>
                 Одно из древнейших постоянно населённых горных поселений мира.
