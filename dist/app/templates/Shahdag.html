@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="static/logo.png" type="image/png">
+    <title>Easy Travel - Гора Шахдаг</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            background-color: #2a6f3e;
+            padding: 0 15px;
+            height: 60px;
+        }
+
+        nav img {
+            height: 40px;
+            margin-right: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0 15px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #1f4f2a;
+        }
+
+        section {
+            padding: 50px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h2 {
+            font-weight: 700;
+            text-align: center;
+            color: #2a6f3e;
+            margin-bottom: 30px;
+        }
+
+        p, li {
+            font-weight: 400;
+            font-size: 1em;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        .trail-details img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        #map {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2a6f3e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        /* Responsive nav on smaller screens */
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                height: auto;
+            }
+
+            nav img {
+                margin-bottom: 10px;
+            }
+
+            nav a {
+                color: white;
+                text-decoration: none;
+                padding: 0 15px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                font-weight: bold;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+        }
+    </style>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+
+<nav>
+    <a href="{{ url_for('main') }}"><img src="static/logo.png" alt="Easy Travel Логотип"></a>
+    <a href="#gallery">Галерея</a>
+    <a href="#overview">Обзор</a>
+    <a href="#routes">Маршруты</a>
+    <a href="#tips">Советы</a>
+    <a href="#contact">Контакты</a>
+    <div style="margin-left:auto; display:flex; gap:10px;">
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}">Выйти</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Войти</a>
+            <a href="{{ url_for('register') }}">Регистрация</a>
+        {% endif %}
+    </div>
+</nav>
+
+<section id="gallery">
+    <h2>Галерея Шахдага</h2>
+    <div class="gallery">
+        <img src="static/Shahdag1.jpg" alt="Шахдаг 1">
+        <img src="static/Shahdag2.jpg" alt="Шахдаг 2">
+        <img src="static/Shahdag3.jpg" alt="Шахдаг 3">
+    </div>
+</section>
+
+<section id="overview">
+    <h2>Обзор горы Шахдаг</h2>
+    <div class="trail-details">
+        <p>Шахдаг — одна из самых известных гор Азербайджана, расположенная в регионе Гусар. Она привлекает туристов своими впечатляющими альпийскими пейзажами, разнообразными маршрутами и уникальной природой. Высота горы достигает более 4200 метров, а климат и рельеф создают разнообразные условия для пешего туризма и хайкинга.</p>
+        <p>Гора известна своими живописными долинами, густыми лесами и кристально чистыми горными реками. Маршруты варьируются от лёгких прогулок до сложных восхождений, подходящих для опытных туристов и любителей приключений.</p>
+    </div>
+</section>
+
+<section id="routes">
+    <h2>Маршруты на Шахдаг</h2>
+    <div class="trail-details">
+        <p><strong>Маршрут 1:</strong> Лёгкая прогулка к лесным озёрам. Идеально для новичков и семей.</p>
+        <p><strong>Маршрут 2:</strong> Средний маршрут через долины и хребты с панорамными видами на Кавказ.</p>
+        <p><strong>Маршрут 3:</strong> Сложный альпийский маршрут на вершину для опытных туристов.</p>
+    </div>
+    <div id="map"></div>
+</section>
+
+<section id="tips">
+    <h2>Советы для пешего туризма на Шахдаг</h2>
+    <p>Чтобы поход на Шахдаг был безопасным и комфортным, обратите внимание на следующие рекомендации:</p>
+    <ul>
+        <li>Проверяйте прогноз погоды на высокогорье — погодные условия могут меняться очень быстро.</li>
+        <li>Берите с собой легкий дождевик и ветровку, даже если внизу солнечно.</li>
+        <li>Используйте навигационные приложения или GPS-трекеры для отслеживания маршрута.</li>
+        <li>Заранее уточните наличие подъемников и инфраструктуры на горе, если планируете комбинированный маршрут.</li>
+        <li>Возьмите с собой небольшой комплект первой помощи и средства защиты от солнца.</li>
+        <li>Не поднимайтесь на высоту резко, делайте паузы для акклиматизации.</li>
+        <li>Соблюдайте местные правила охраны природы и не разводите костры вне специально отведённых зон.</li>
+        <li>Берите с собой дополнительную еду и воду на случай долгого маршрута.</li>
+        <li>Планируйте маршрут с учетом длительности светового дня, особенно зимой.</li>
+    </ul>
+</section>
+<section id="comments">
+    <h2>Комментарии</h2>
+
+    {% if current_user.is_authenticated %}
+        <form method="POST">
+            <textarea name="content" rows="4" placeholder="Напишите ваш комментарий..." required
+                style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"></textarea>
+            <button type="submit" style="cursor:pointer; padding:10px 15px; background-color:#2a6f3e; color:white; border:none; border-radius:5px;">Отправить</button>
+        </form>
+    {% else %}
+        <p>Чтобы оставить комментарий, <a href="{{ url_for('login') }}">войдите</a> или <a href="{{ url_for('register') }}">зарегистрируйтесь</a>.</p>
+    {% endif %}
+
+    <div class="comment-list" style="margin-top:20px;">
+
+        {% set max_visible = 5 %}
+        {% for comment in comments[:max_visible] %}
+            <div style="background:#fff; padding:10px; margin-bottom:10px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                <strong>{{ comment.user.email }}</strong>
+                <small>{{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                <p>{{ comment.content }}</p>
+            </div>
+        {% endfor %}
+
+        {% if comments|length > max_visible %}
+            <div id="more-comments" style="display:none;">
+                {% for comment in comments[max_visible:] %}
+                    <div style="background:#fff; padding:10px; margin-bottom:10px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                        <strong>{{ comment.user.email }}</strong>
+                        <small>{{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <button id="show-more" style="padding:8px 12px; background:#2a6f3e; color:white; border:none; border-radius:5px; cursor:pointer;">Показать больше</button>
+        {% endif %}
+
+        {% if comments|length == 0 %}
+            <p>Нет комментариев. Будьте первым!</p>
+        {% endif %}
+
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("show-more");
+    if (btn) {
+        btn.addEventListener("click", function() {
+            const more = document.getElementById("more-comments");
+            more.style.display = "block";
+            btn.style.display = "none"; // hide the button after clicking
+        });
+    }
+});
+</script>
+<section id="contact">
+    <h2>Контакты</h2>
+    <p style="text-align:center;">Для дополнительной информации: <a href="mailto:info@easytravel.com">info@easytravel.com</a></p>
+</section>
+
+<footer>
+    &copy; 2025 Easy Travel. Все права защищены.
+</footer>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    const map = L.map('map').setView([41.3930, 48.4870], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Маркеры маршрутов на горе Шахдаг
+    const routes = [
+        {
+            name: "Маршрут 1: Лёгкая прогулка",
+            coords: [41.3810, 48.4730],
+            desc: "Лёгкая прогулка к лесным озёрам. Идеально для новичков и семей."
+        },
+        {
+            name: "Маршрут 2: Средний маршрут",
+            coords: [41.4005, 48.5000],
+            desc: "Маршрут через долины и хребты с панорамными видами на Кавказ."
+        },
+        {
+            name: "Маршрут 3: Альпийский маршрут",
+            coords: [41.4080, 48.5080],
+            desc: "Сложный альпийский маршрут на вершину для опытных туристов."
+        }
+    ];
+
+
+
+    routes.forEach(route => {
+        L.marker(route.coords).addTo(map)
+         .bindPopup(`<b>${route.name}</b>`);
+    });
+</script>
+
+</body>
+</html>

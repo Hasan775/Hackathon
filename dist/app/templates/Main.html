@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="static/logo.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Travel - Пеший туризм в Азербайджане</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Reset and basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Navigation with logo and smaller height */
+        nav {
+            display: flex;
+            align-items: center;
+            background-color: #2a6f3e;
+            padding: 0 15px;
+            height: 60px;
+        }
+
+        nav img {
+            height: 40px;
+            margin-right: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0 15px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #1f4f2a;
+        }
+
+        /* Full-width Our Project section with parallax */
+        #project-container {
+            background-image: url('static/background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 80px 0;
+            color: white;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+        }
+
+        #project {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        #project h2 {
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            color: white;
+        }
+
+        #project p {
+            max-width: 900px;
+            margin: auto;
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: white;
+        }
+
+        /* Benefits full-width section */
+        #benefits-container {
+            background-color: #e6f3ea;
+            padding: 60px 0;
+        }
+
+        #benefits {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        #benefits h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2a6f3e;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .benefit-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: scale(1.05);
+        }
+
+        .benefit-card h3 {
+            margin-bottom: 15px;
+            color: #2a6f3e;
+        }
+
+        .benefit-card p {
+            color: #555;
+        }
+
+        /* Sections */
+        section {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2a6f3e;
+        }
+
+        /* Region Filter */
+        #region-filter {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        #region-select {
+            padding: 10px;
+            width: 250px;
+            border-radius: 6px;
+            border: 1px solid #999;
+            font-size: 1em;
+        }
+
+        .trails {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            justify-items: center; /* center cards in the row */
+        }
+
+        /* Card styles */
+        .trail-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 300px;
+            min-height: 480px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Hidden state */
+        .trail-card.hide {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+
+        .trail-card:hover {
+            transform: scale(1.05);
+        }
+
+        .trail-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .trail-card h3 {
+            padding: 15px;
+            font-size: 1.2em;
+        }
+
+        .trail-card p {
+            padding: 0 15px 15px 15px;
+            color: #666;
+        }
+        .trail-card a {
+            text-decoration: none;
+            color : black;
+        }
+        /* Footer */
+        footer {
+            background-color: #2a6f3e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Responsive nav on smaller screens */
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                height: auto;
+            }
+
+            nav img {
+                margin-bottom: 10px;
+            }
+
+            nav a {
+                color: white;
+                text-decoration: none;
+                padding: 0 15px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                font-weight: bold;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="{{ url_for('main') }}"><img src="static/logo.png" alt="Easy Travel Логотип"></a>
+    <a href="#project">Наш проект</a>
+    <a href="#benefits">Преимущества</a>
+    <a href="#trails">Лучшие маршруты</a>
+    <a href="#tips">Советы</a>
+    <a href="#contact">Контакты</a>
+    <div style="margin-left:auto; display:flex; gap:10px;">
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}">Выйти</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Войти</a>
+            <a href="{{ url_for('register') }}">Регистрация</a>
+        {% endif %}
+    </div>
+</nav>
+
+<div id="project-container">
+    <section id="project">
+        <h2>Наш проект</h2>
+        <p>
+            Наш проект посвящён помощи путешественникам в поиске <strong>бесплатных и доступных мест для пешего туризма в Азербайджане</strong>.
+            С помощью нашей платформы пользователи могут находить тропы, скрытые уголки и живописные места без каких-либо входных плат.
+            Мы стремимся сделать походы более доступными, удобными и приятными для всех, продвигая безопасность,
+            устойчивость и исследование природной красоты страны.
+        </p>
+    </section>
+</div>
+
+<div id="benefits-container">
+    <section id="benefits">
+        <h2>Преимущества пешего туризма</h2>
+        <div class="benefits">
+            <div class="benefit-card">
+                <h3>Физическое здоровье</h3>
+                <p>Хайкинг улучшает работу сердца, укрепляет мышцы и увеличивает выносливость.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>Психологическое благополучие</h3>
+                <p>Пребывание на природе снижает стресс, улучшает настроение и повышает ясность ума.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>Социальная связь</h3>
+                <p>Походы с друзьями или группой укрепляют отношения и создают общие впечатления.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>Приключения и исследование</h3>
+                <p>Открывайте новые тропы, пейзажи и уникальные места, исследуя природу Азербайджана.</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="trails">
+    <h2>Лучшие походные маршруты</h2>
+    <div id="region-filter">
+        <select id="region-select">
+            <option value="all">Все регионы</option>
+            <option value="Quba">Губа</option>
+            <option value="Sheki">Шеки</option>
+            <option value="Qusar">Гусар</option>
+        </select>
+    </div>
+
+    <div class="trails" id="trail-list">
+        <div class="trail-card" data-region="Qusar">
+            <img src="static/Laza-Kuzun1.jpg" alt="Лаза-Кузун">
+            <h3><a href="{{ url_for('laza_kuzun') }}">Тропа Лаза - Кузун </a></h3>
+            <p>
+                Регион: Гусар<br><br>
+                Маршрут Лаза – Кузун — лёгкая горная тропа длиной около 6–7 км, соединяющая две деревни. 
+                Проходит через леса, луга и ущелья с красивыми видами на Кавказские горы. 
+                Подходит для пеших прогулок без гида.
+            </p>
+        </div>
+
+        <div class="trail-card" data-region="Qusar">
+            <img src="static/Shahdag1.jpg" alt="Шахдаг">
+            <h3><a href="{{ url_for('shahdag') }}">Гора Шахдаг</a></h3>
+            <p>
+                Регион: Гусар<br><br>
+                Один из самых известных походных маршрутов Азербайджана.
+                Шахдаг предлагает потрясающие горные пейзажи, свежий альпийский воздух и спокойствие природы.
+                Маршрут варьируется от среднего до сложного уровня — идеален для тех, кто ищет приключений
+                и незабываемые виды Большого Кавказа.
+            </p>
+        </div>
+
+        <div class="trail-card" data-region="Sheki">
+            <img src="static/Transcaucas1.jpg" alt="Горный маршрут Транскавказ">
+            <h3><a href="{{ url_for('transcaucas') }}">Транскавказский маршрут</a></h3>
+            <p>
+                Регион: Шеки<br><br>
+                Транскавказский маршрут — короткий горный трек через живописные долины и хребты Кавказа, 
+                проходящий по лесам, ущельям и смотровым точкам с панорамными видами. 
+                Подходит для пешего похода средней сложности.
+            </p>
+        </div>
+
+        <div class="trail-card" data-region="Quba">
+            <img src="static/Xinaliq2.jpg" alt="Хыналыг">
+            <h3><a href="{{ url_for('xinaliq') }}">Тропа к селу Хыналыг</a></h3>
+            <p>
+                Регион: Губа<br><br>
+                Одно из древнейших постоянно населённых горных поселений мира.
+                Маршрут проходит через долины, зелёные склоны и живописные хребты.
+                Идеален для любителей природы, культуры и истории.
+                Средний уровень сложности.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="tips">
+    <h2>Советы для походов</h2>
+    <p style="text-align:center; max-width:800px; margin:auto;">
+        Всегда берите достаточно воды, надевайте удобную обувь, проверяйте погоду
+        и уважайте окружающую среду. В Азербайджане много разных типов ландшафтов —
+        от гор до полупустынь, поэтому планируйте маршрут заранее.
+    </p>
+</section>
+
+<section id="contact">
+    <h2>Контакты</h2>
+    <p style="text-align:center;">Для дополнительной информации: <a href="mailto:info@easytravel.com">info@easytravel.com</a></p>
+</section>
+
+<footer>
+    &copy; 2025 Easy Travel. Все права защищены.
+</footer>
+
+<script>
+const regionSelect = document.getElementById("region-select");
+const trails = document.querySelectorAll(".trail-card");
+
+regionSelect.addEventListener("change", function () {
+    const region = this.value;
+
+    trails.forEach(trail => {
+        const show = (region === "all" || trail.dataset.region === region);
+
+        if (show) {
+            trail.style.display = "block";
+            requestAnimationFrame(() => {
+                trail.classList.remove("hide");
+            });
+        } else {
+            trail.classList.add("hide");
+            setTimeout(() => {
+                trail.style.display = "none";
+            }, 300);
+        }
+    });
+});
+</script>
+
+</body>
+</html>

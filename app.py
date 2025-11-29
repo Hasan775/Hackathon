@@ -2,8 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from waitress import serve
+from threading import Timer
+import webbrowser
 import os
-
+import datetime
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -20,6 +23,7 @@ login_manager.login_view = "login"
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
+    username = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(200))
 
 class Comment(db.Model):
@@ -30,7 +34,6 @@ class Comment(db.Model):
     timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     user = db.relationship('User', backref='comments')
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -43,13 +46,19 @@ def load_user(user_id):
 def register():
     if request.method == "POST":
         email = request.form['email']
+        username = request.form['username']
         password = request.form['password']
 
+        # EMAIL must be unique
         if User.query.filter_by(email=email).first():
             return "Такой email уже зарегистрирован"
 
+        # USERNAME must be unique
+        if User.query.filter_by(username=username).first():
+            return "Такое имя пользователя уже занято"
+
         hashed = generate_password_hash(password)
-        new_user = User(email=email, password=hashed)
+        new_user = User(email=email, username=username, password=hashed)
         db.session.add(new_user)
         db.session.commit()
 
@@ -60,10 +69,11 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
-        email = request.form['email']
+        login_id = request.form['email']  # это может быть email или username
         password = request.form['password']
 
-        user = User.query.filter_by(email=email).first()
+        # пробуем найти по email
+        user = User.query.filter_by(email=login_id).first()
 
         if not user or not check_password_hash(user.password, password):
             return "Неверные данные"
@@ -148,4 +158,5 @@ if __name__ == "__main__":
     if not os.path.exists("users.db"):
         with app.app_context():
             db.create_all()
-    app.run(debug=True)
+    webbrowser.open("http://127.0.0.1:5000")
+    serve(app, host="127.0.0.1", port=5000)

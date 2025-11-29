@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="static/logo.png" type="image/png">
+    <title>Easy Travel - Горный путь Хыналыг</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            background-color: #2a6f3e;
+            padding: 0 15px;
+            height: 60px;
+        }
+
+        nav img {
+            height: 40px;
+            margin-right: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0 15px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            background-color: #1f4f2a;
+        }
+
+        section {
+            padding: 50px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h2 {
+            font-weight: 700;
+            text-align: center;
+            color: #2a6f3e;
+            margin-bottom: 30px;
+        }
+
+        p, li {
+            font-weight: 400;
+            font-size: 1em;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        .trail-details img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 10px;
+            transition: filter 0.3s;
+        }
+
+        .gallery img:hover {
+            filter: brightness(85%);
+        }
+
+        #map {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        footer {
+            background-color: #2a6f3e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                height: auto;
+            }
+            nav img {
+                margin-bottom: 10px;
+            }
+            nav a {
+                font-weight: bold;
+            }
+            #map {
+                height: 300px;
+            }
+        }
+    </style>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+
+<nav>
+    <a href="{{ url_for('main') }}"><img src="static/logo.png" alt="Easy Travel Логотип"></a>
+    <a href="#gallery">Галерея</a>
+    <a href="#overview">Обзор</a>
+    <a href="#routes">Маршруты</a>
+    <a href="#tips">Советы</a>
+    <a href="#contact">Контакты</a>
+    <div style="margin-left:auto; display:flex; gap:10px;">
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}">Выйти</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Войти</a>
+            <a href="{{ url_for('register') }}">Регистрация</a>
+        {% endif %}
+    </div>
+</nav>
+
+<section id="gallery">
+    <h2>Галерея горного пути Хыналыг</h2>
+    <div class="gallery">
+        <img src="static/Xinaliq1.jpg" alt="Хыналыг 1">
+        <img src="static/Xinaliq2.jpg" alt="Хыналыг 2">
+        <img src="static/Xinaliq3.jpg" alt="Хыналыг 3">
+        <img src="static/Xinaliq4.jpg" alt="Хыналыг 4">
+    </div>
+</section>
+
+<section id="overview">
+    <h2>Обзор горного пути Хыналыг</h2>
+    <div class="trail-details">
+        <p>Горный путь Хыналыг — живописный маршрут в Губе, ведущий к высокогорной деревне Хыналыг. Протяжённость маршрута около 5–6 км, проходя через леса, горные склоны и ущелья. Путь идеально подходит для пеших прогулок и небольшого треккинга.</p>
+        <p>Маршрут варьируется от лёгких участков до умеренно сложных склонов, открывая туристам прекрасные панорамные виды на Кавказские горы и долины. Деревня Хыналыг — одно из древнейших и самых высокогорных поселений Азербайджана.</p>
+    </div>
+</section>
+
+<section id="routes">
+    <h2>Маршруты на пути Хыналыг</h2>
+    <div class="trail-details">
+        <p><strong>Маршрут:</strong> Начало у подножья горы в Губе, конец в селе Хыналыг</p>
+    </div>
+    <div id="map"></div>
+</section>
+
+<section id="tips">
+    <h2>Советы для похода по Хыналыгу</h2>
+    <ul>
+        <li>Уточняйте погодные условия перед выходом, особенно в горной местности.</li>
+        <li>Надевайте удобную обувь с хорошей подошвой и подходящую по сезону одежду.</li>
+        <li>Берите с собой воду и небольшие перекусы для поддержания энергии.</li>
+        <li>Соблюдайте правила безопасности и охраны природы, не оставляйте мусор.</li>
+        <li>Останавливайтесь на смотровых площадках, чтобы отдохнуть и насладиться видами.</li>
+        <li>Используйте GPS, карты или приложение с маршрутом, чтобы не сбиться с пути.</li>
+        <li>Если идёте группой, держитесь вместе и заранее оговорите время встречи.</li>
+    </ul>
+</section>
+<section id="comments">
+    <h2>Комментарии</h2>
+
+    {% if current_user.is_authenticated %}
+        <form method="POST">
+            <textarea name="content" rows="4" placeholder="Напишите ваш комментарий..." required
+                style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"></textarea>
+            <button type="submit" style="padding:10px 15px; background-color:#2a6f3e; color:white; border:none; border-radius:5px;">Отправить</button>
+        </form>
+    {% else %}
+        <p>Чтобы оставить комментарий, <a href="{{ url_for('login') }}">войдите</a> или <a href="{{ url_for('register') }}">зарегистрируйтесь</a>.</p>
+    {% endif %}
+
+    <div class="comment-list" style="margin-top:20px;">
+
+        {% set max_visible = 5 %}
+        {% for comment in comments[:max_visible] %}
+            <div style="background:#fff; padding:10px; margin-bottom:10px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                <strong>{{ comment.user.email }}</strong>
+                <small>{{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                <p>{{ comment.content }}</p>
+            </div>
+        {% endfor %}
+
+        {% if comments|length > max_visible %}
+            <div id="more-comments" style="display:none;">
+                {% for comment in comments[max_visible:] %}
+                    <div style="background:#fff; padding:10px; margin-bottom:10px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                        <strong>{{ comment.user.email }}</strong>
+                        <small>{{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <button id="show-more" style="cursor:pointer; padding:8px 12px; background:#2a6f3e; color:white; border:none; border-radius:5px; cursor:pointer;">Показать больше</button>
+        {% endif %}
+
+        {% if comments|length == 0 %}
+            <p>Нет комментариев. Будьте первым!</p>
+        {% endif %}
+
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("show-more");
+    if (btn) {
+        btn.addEventListener("click", function() {
+            const more = document.getElementById("more-comments");
+            more.style.display = "block";
+            btn.style.display = "none"; // hide the button after clicking
+        });
+    }
+});
+</script>
+<section id="contact">
+    <h2>Контакты</h2>
+    <p style="text-align:center;">Для дополнительной информации: <a href="mailto:info@easytravel.com">info@easytravel.com</a></p>
+</section>
+
+<footer>
+    &copy; 2025 Easy Travel. Все права защищены.
+</footer>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    const map = L.map('map').setView([41.2590, 48.5360], 13); // координаты Губы/Хыналыга
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Маркеры начала и конца маршрута
+    const points = [
+        {name: "Начало маршрута в Губе", coords: [41.2700, 48.5400]},
+        {name: "Село Хыналыг (финиш)", coords: [41.2590, 48.5360]}
+    ];
+
+    points.forEach(point => {
+        L.marker(point.coords).addTo(map)
+         .bindPopup(`<b>${point.name}</b>`);
+    });
+</script>
+
+</body>
+</html>
