@@ -140,12 +140,20 @@
 <body>
 
 <nav>
-    <a href="../Main/Main.html"><img src="static/logo.png" alt="Easy Travel Логотип"></a>
+    <a href="{{ url_for('main') }}"><img src="static/logo.png" alt="Easy Travel Логотип"></a>
     <a href="#gallery">Галерея</a>
     <a href="#overview">Обзор</a>
     <a href="#routes">Маршруты</a>
     <a href="#tips">Советы</a>
     <a href="#contact">Контакты</a>
+    <div style="margin-left:auto; display:flex; gap:10px;">
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}">Выйти</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Войти</a>
+            <a href="{{ url_for('register') }}">Регистрация</a>
+        {% endif %}
+    </div>
 </nav>
 
 <section id="gallery">
@@ -187,7 +195,62 @@
         <li>Если маршрут длинный, планируйте отдых на высокогорных плато и учитывайте запас времени до захода солнца.</li>
     </ul>
 </section>
+<section id="comments">
+    <h2>Комментарии</h2>
 
+    {% if current_user.is_authenticated %}
+        <form method="POST">
+            <textarea name="content" rows="4" placeholder="Напишите ваш комментарий..." required
+                style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"></textarea>
+            <button type="submit" style="padding:10px 15px; background-color:#2a6f3e; color:white; border:none; border-radius:5px;">Отправить</button>
+        </form>
+    {% else %}
+        <p>Чтобы оставить комментарий, <a href="{{ url_for('login') }}">войдите</a> или <a href="{{ url_for('register') }}">зарегистрируйтесь</a>.</p>
+    {% endif %}
+
+    <div class="comment-list" style="margin-top:20px;">
+
+        {% set max_visible = 5 %}
+        {% for comment in comments[:max_visible] %}
+            <div style="background:#fff; padding:10px; margin-bottom:10px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                <strong>{{ comment.user.email }}</strong>
+                <small>{{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                <p>{{ comment.content }}</p>
+            </div>
+        {% endfor %}
+
+        {% if comments|length > max_visible %}
+            <div id="more-comments" style="display:none;">
+                {% for comment in comments[max_visible:] %}
+                    <div style="background:#fff; padding:10px; margin-bottom:10px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                        <strong>{{ comment.user.email }}</strong>
+                        <small>{{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <button id="show-more" style="padding:8px 12px; background:#2a6f3e; color:white; border:none; border-radius:5px; cursor:pointer;">Показать больше</button>
+        {% endif %}
+
+        {% if comments|length == 0 %}
+            <p>Нет комментариев. Будьте первым!</p>
+        {% endif %}
+
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("show-more");
+    if (btn) {
+        btn.addEventListener("click", function() {
+            const more = document.getElementById("more-comments");
+            more.style.display = "block";
+            btn.style.display = "none"; // hide the button after clicking
+        });
+    }
+});
+</script>
 <section id="contact">
     <h2>Контакты</h2>
     <p style="text-align:center;">Для дополнительной информации: <a href="mailto:info@easytravel.com">info@easytravel.com</a></p>

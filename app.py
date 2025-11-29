@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin
+from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
@@ -22,6 +22,15 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(200))
 
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    trail = db.Column(db.String(100), nullable=False)  # e.g., 'Laza-Kuzun'
+    timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+    user = db.relationship('User', backref='comments')
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -30,10 +39,6 @@ def load_user(user_id):
 # ---------------------
 # ROUTES
 # ---------------------
-@app.route('/')
-def index():
-    return "Главная страница. <a href='/profile'>Профиль</a> | <a href='/login'>Войти</a> | <a href='/register'>Регистрация</a>"  # create index.html in templates
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
@@ -72,35 +77,69 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('main'))
 
 # ---------------------
 # Hiking pages
 # ---------------------
-@app.route('/Main')
-@login_required
+@app.route('/')
 def main():
     return render_template('Main.html')
 
-@app.route('/Laza-Kuzun')
-@login_required
+@app.route('/Laza-Kuzun', methods=['GET', 'POST'])
 def laza_kuzun():
-    return render_template('Laza-Kuzun.html')
+    if request.method == "POST":
+        content = request.form['content']
+        if content.strip():  # ignore empty comments
+            comment = Comment(content=content, user_id=current_user.id, trail='Laza-Kuzun')
+            db.session.add(comment)
+            db.session.commit()
+        return redirect(url_for('laza_kuzun'))
 
-@app.route('/Shahdag')
-@login_required
+    comments = Comment.query.filter_by(trail='Laza-Kuzun').order_by(Comment.timestamp.desc()).all()
+    return render_template('Laza-Kuzun.html', comments=comments)
+
+@app.route('/Shahdag', methods=['GET', 'POST'])
 def shahdag():
-    return render_template('Shahdag.html')
+    if request.method == "POST":
+        if current_user.is_authenticated:
+            content = request.form['content']
+            if content.strip():
+                comment = Comment(content=content, user_id=current_user.id, trail='Shahdag')
+                db.session.add(comment)
+                db.session.commit()
+        return redirect(url_for('shahdag'))
 
-@app.route('/Xinaliq')
-@login_required
+    comments = Comment.query.filter_by(trail='Shahdag').order_by(Comment.timestamp.desc()).all()
+    return render_template('Shahdag.html', comments=comments)
+
+@app.route('/Xinaliq', methods=['GET', 'POST'])
 def xinaliq():
-    return render_template('Xinaliq.html')
+    if request.method == "POST":
+        if current_user.is_authenticated:
+            content = request.form['content']
+            if content.strip():
+                comment = Comment(content=content, user_id=current_user.id, trail='Xinaliq')
+                db.session.add(comment)
+                db.session.commit()
+        return redirect(url_for('xinaliq'))
 
-@app.route('/Transcaucas')
-@login_required
+    comments = Comment.query.filter_by(trail='Xinaliq').order_by(Comment.timestamp.desc()).all()
+    return render_template('Xinaliq.html', comments=comments)
+
+@app.route('/Transcaucas', methods=['GET', 'POST'])
 def transcaucas():
-    return render_template('Transcaucas.html')
+    if request.method == "POST":
+        if current_user.is_authenticated:
+            content = request.form['content']
+            if content.strip():
+                comment = Comment(content=content, user_id=current_user.id, trail='Transcaucas')
+                db.session.add(comment)
+                db.session.commit()
+        return redirect(url_for('transcaucas'))
+
+    comments = Comment.query.filter_by(trail='Transcaucas').order_by(Comment.timestamp.desc()).all()
+    return render_template('Transcaucas.html', comments=comments)
 
 # ---------------------
 # START

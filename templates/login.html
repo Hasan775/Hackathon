@@ -1,5 +1,105 @@
-<form method="POST">
-    Email: <input name="email"> <br>
-    Пароль: <input type="password" name="password"> <br>
-    <button>Войти</button>
-</form>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="static/logo.png" type="image/png">
+    <title>Easy Travel - Вход</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f5f5f5; color: #333; line-height: 1.6; }
+
+        nav {
+            display: flex;
+            align-items: center;
+            background-color: #2a6f3e;
+            padding: 0 15px;
+            height: 60px;
+        }
+        nav img { height: 40px; margin-right: 15px; }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0 15px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        nav a:hover { background-color: #1f4f2a; }
+
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2a6f3e;
+            margin-bottom: 30px;
+        }
+
+        form { display: flex; flex-direction: column; }
+        input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            padding: 10px;
+            background-color: #2a6f3e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #1f4f2a; }
+
+        .links {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .links a { color: #2a6f3e; text-decoration: none; }
+        .links a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            nav { flex-direction: column; align-items: flex-start; height: auto; }
+            nav img { margin-bottom: 10px; }
+            nav a { font-weight: bold; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <img src="static/logo.png" alt="Easy Travel Логотип">
+</nav>
+
+<div class="login-container">
+    <h2>Вход в аккаунт</h2>
+
+    <form method="POST">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+    </form>
+
+    <div class="links">
+        <a href="{{ url_for('register') }}">Создать аккаунт</a>
+    </div>
+</div>
+
+</body>
+</html>
